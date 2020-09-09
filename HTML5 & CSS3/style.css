@@ -1,0 +1,20 @@
+/*Tag-Based Styling*/
+body{
+    background-color: rgb(160, 121, 70);
+    font-family: sans-serif;
+    font-style: italic;
+}
+/*ID-Based Styling*/
+#form-id
+{
+    background-color: chocolate;
+}
+/*Class Based Styling*/
+.body-class
+{
+    /*margin: 10px 10px 10px 10px;*/
+    margin-left:10px;
+    margin-right: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+}
