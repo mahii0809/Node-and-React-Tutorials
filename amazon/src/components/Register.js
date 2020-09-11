@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import Dropdownprops from './Dropdownprops';
+import request from 'async-request';
+import axios from 'axios';
 
 export class RegisterComponent extends Component{
     constructor()
@@ -12,11 +14,28 @@ export class RegisterComponent extends Component{
             Age:"",
             gender:"",
             email:"",
-            country:"",
+            countryList:[],
             hobbies:""
             
         }
         
+    }
+    async componentDidMount()
+    {
+        //any external API call at the time of loading
+       // fetch("https://restcountries.eu/rest/v2/all").then(result =>{
+         //   console.log(result);
+           // return result.json();
+        //}).catch(err=>{
+          //  console.log(err)
+        //}).then(finalResult=>{
+          //  console.log(finalResult);
+        //})
+        //let contryList =await request("https://restcountries.eu/rest/v2/all");
+        //console.log(contryList);
+        let countryList =await axios("https://restcountries.eu/rest/v2/all");
+        console.log(countryList);
+        this.setState({countryList:countryList.data});
     }
     handleChanges=(e)=>{
         console.log(e.target.value);
@@ -25,10 +44,16 @@ export class RegisterComponent extends Component{
         this.setState(currentState);
         console.log(this.state);
     }
+    bindDataToDropDown=()=>
+    {
+        return this.state.countryList.map((item,index)=>{
+        return <option value={item.alpha2Code}>{item.name}</option>
+
+        })
+    }
     render()
     {
         var Data=["Cricket","Carrom","Badminton"];
-        var country=["India","USA","UK","Brazil","China","Srilanka"];
         return <div>
             <div>
                 <label className="col-sm-2 col-form-label">Username:</label>
@@ -63,11 +88,14 @@ export class RegisterComponent extends Component{
                     </div>
                     <div>
                            <label className="col-sm-2 col-form-label">Country:</label>
-                        <Dropdownprops list={country} onChange={this.handleChanges}/>
+                      
+                      <select className="form-control"id="countryList" name="countryList" onChange={this.handleChanges}>
+                          {this.bindDataToDropDown()}
+                    </select>
                     </div>
                        <div>
                 
-                <input type="checkbox" placeholder="Age" value="agree"name="agree" onChange={this.handleChanges}/> I Agree to the Terms and condition
+                <input type="checkbox" placeholder="Age" id="check"value="agree"name="agree" onChange={this.handleChanges}/> I Agree to the Terms and condition
                        </div>
                        
                        <div>
