@@ -1,19 +1,29 @@
-import React from 'react';
-import Header from './components/Header'
-import Footer from './components/Footer'
-import { LoginComponent } from './components/Login';
-import { RegisterComponent } from './components/Register';
-import { BookComponent } from './components/book';
+import React, { Component } from 'react';
+import ProductList from './components/ProductList';
+import AmazonHeader from './components/AmazonHeader';
 
 //This is pure component or stateless component
 //any component we create are part of react
-const App =()=>{
-    const companyName='Pega Systems';
+export class App extends Component {
+    constructor(){
+        super();
+        this.state={
+            companyName:'Amazon',
+            cartCount:0
+        }
+    }
+    handleclick=(data)=>{
+        console.log(data);
+       // props.handleclick(data);
+       this.setState({cartCount:this.state.cartCount+1})
+    }
+    render(){
     return <div>
-        <Header title={companyName} /> 
-        <center>
-            <h1>Product </h1>
-       <BookComponent/></center> 
+        <AmazonHeader title={this.state.companyName} 
+        cartCount={this.state.cartCount} /> 
+        {/*ProductList*/}
+        <ProductList updateCart={this.handleclick}/>
         </div>;
+    }
 };
 export default App;
